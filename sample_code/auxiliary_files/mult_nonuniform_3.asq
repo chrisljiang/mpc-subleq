@@ -1,0 +1,93 @@
+# o = 0
+o o
+
+# C = a-1
+Z Z
+C C
+a Z
+Z C
+dec C
+
+# B = -b
+B B
+b B
+
+# A = b, D = b
+A A
+D D
+B A
+B D
+
+# E = 1
+E E
+inc E
+
+# if C <= 0, end
+L0:Z Z
+T T
+C Z
+Z T L2
+
+# if E <= C, jump to L1
+Z Z
+T T
+E Z
+Z T
+C T L1
+
+# D = b, E = 1
+D D
+B D
+E E
+inc E
+
+# C -= E, A += D, D += D, E += E, and loop
+L1:E C
+Z Z
+D Z
+Z A
+Z D
+Z Z
+E Z
+Z E
+Z Z L0
+
+# end
+L2:Z Z
+A Z
+Z o
+Z Z (-1)
+
+. E:0       # counter of multiples of b
+. D:0       # value of multiples of b
+. C:0       # counter for a
+. B:0       # -b
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. a:0       # input
+. b:0       # input
+. o:0       # output
+
+# -----
+# 
+# To calculate a * b
+# 
+# C = a-1
+# A = b
+# D = b
+# E = 1
+# while (C > 0)
+# {
+#     if (E > C)
+#     {
+#         D = b
+#         E = 1
+#     }
+#     C -= E
+#     A += D
+#     D += D
+#     E += E
+# }

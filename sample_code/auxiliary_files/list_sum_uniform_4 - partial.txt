@@ -1,0 +1,39 @@
+clear variables:
+    acc acc next next
+    out out next next
+    zero zero next next
+    done done next next
+
+set i:
+    zero start next next
+    i zero next next # i = start
+    zero zero next next
+
+set done:
+    done done next next
+    zero end next next
+    done zero next next # done = end
+    zero zero next next
+
+test end:
+    done i finish next
+
+add:
+    acc *i next next
+    i inc set_done set_done
+
+finish:
+    out acc next next
+
+acc
+out
+zero
+done
+inc
+start (points to start of list)
+end (points one index past end)
+
+list0
+list1
+list2
+list3

@@ -1,0 +1,280 @@
+# o = 0
+o o
+
+# C = b
+Z Z
+C C
+b Z
+Z C
+
+# A = 1
+A A
+inc A
+
+#######################################
+##### if b == 0, B = 1 else B = a #####
+#######################################
+
+# B = 0
+B B
+
+# if b >= 0, check if b <= 0
+T T
+b T L0
+
+# padding instructions for security
+Z Z
+Z Z L1
+
+# if b <= 0, b == 0
+L0:Z Z
+T Z L3
+
+# B = -a
+L1:Z Z
+a Z
+Z B
+
+# padding instructions for security
+L2:Z Z L4
+L3:inc B
+Z Z
+Z Z L2
+
+#######################################
+
+# if i0 < 0, end
+L4:Z Z
+T T
+i0 Z
+Z T
+L T L7
+
+# "function call" to multiplication
+# load A into am and bm (inputs to calculate A *= A)
+# load R0 into Rm (return address)
+am am
+bm bm
+A am
+A bm
+Rm Rm
+R0 Rm
+Z Z mult
+
+# store return value of "function call"
+ret0:A A
+om A
+
+# pre-zero am and bm for function call
+am am
+bm bm
+
+# if arr[i0] <= C, jump
+Z Z
+T T
+i0:arr_31 Z
+Z T
+C T L5
+
+# "function call" to multiplication
+# load A into am and 1 into bm (inputs to calculate A *= 1)
+A am
+dec bm
+
+# padding instructions for security
+Z Z
+S0 Z
+LL0:inc Z LL0
+Z Z L6
+
+# i1 = i0
+L5:Z Z
+i1 i1
+i0 Z
+Z i1
+
+# C -= arr[i1]
+i1:0 C
+
+# "function call" to multiplication
+# load A into am and a into bm (inputs to calculate A *= a)
+A am
+B bm
+
+# load R1 into Rm (return address)
+L6:Rm Rm
+R1 Rm
+Z Z mult
+
+# store return value of "function call"
+ret1:A A
+om A
+
+# --i0 and loop
+dec i0
+Z Z L4
+
+# end
+L7:Z Z
+A Z
+Z o
+Z Z (-1)
+
+####################################
+##### multiplication function  #####
+####################################
+
+# im0 = 31
+mult:im0 im0
+l im0
+
+# om = 0
+om om
+
+# Cm = am
+Z Z
+Cm Cm
+am Z
+Z Cm
+
+# Am = 0
+Am Am
+
+############################################
+##### if am == 0, Bm = 0 else Bm = -bm #####
+############################################
+
+# Bm = 0
+Bm Bm
+
+# if am >= 0, check if am <= 0
+T T
+am T Lm0
+
+# padding instructions for security
+Z Z
+Z Z Lm1
+
+# if am <= 0, am == 0
+Lm0:Z Z
+T Z Lm3
+
+# Bm = -bm
+Lm1:bm Bm
+
+# padding instructions for security
+Lm2:Z Z Lm4
+Lm3:Z Z Lm2
+
+############################################
+
+# if im0 < 0, end
+Lm4:Z Z
+T T
+im0 Z
+Z T
+L T Lm7
+
+# Am += Am
+Z Z
+Am Z
+Z Am
+
+# if arr[im0] <= Cm, jump
+Z Z
+T T
+im0:0 Z
+Z T
+Cm T Lm5
+
+# padding instructions for security
+Z Z
+S1 Z
+LL1:inc Z LL1
+Z Z Lm6
+
+# Am += bm
+Lm5:Bm Am
+
+# im1 = im0
+Z Z
+im1 im1
+im0 Z
+Z im1
+
+# Cm -= arr[im1]
+im1:0 Cm
+
+# --im0 and loop
+Lm6:dec im0
+Z Z Lm4
+
+# return
+Lm7:Z Z
+Am Z
+Z om
+Z Z arr_m1:Rm:0
+
+. arr_0:1
+. arr_1:2
+. arr_2:4
+. arr_3:8
+. arr_4:16
+. arr_5:32
+. arr_6:64
+. arr_7:128
+. arr_8:256
+. arr_9:512
+. arr_10:1024
+. arr_11:2048
+. arr_12:4096
+. arr_13:8192
+. arr_14:16384
+. arr_15:32768
+. arr_16:65536
+. arr_17:131072
+. arr_18:262144
+. arr_19:524288
+. arr_20:1048576
+. arr_21:2097152
+. arr_22:4194304
+. arr_23:8388608
+. arr_24:16777216
+. arr_25:33554432
+. arr_26:67108864
+. arr_27:134217728
+. arr_28:268435456
+. arr_29:536870912
+. arr_30:1073741824
+. arr_31:2147483648
+
+. L:arr_m1  # &arr[-1] (if i - L <= 0 then exit)
+. l:-arr_31 # -&arr[31]
+. S0:1      # iterations for tight loop for padding no-op
+. S1:2      # iterations for tight loop for padding no-op
+. R0:-ret0  # -address to return to for A *= A
+. R1:-ret1  # -address to return to for A *= a
+. Cm:0      # counter for am
+. Bm:0      # -bm
+. Am:0      # accumulator
+. am:0      # multiplication function input
+. bm:0      # multiplication function input
+. om:0      # multiplication function output
+. C:0       # counter for b
+. B:0       # b
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. a:0       # input
+. b:0       # input
+. o:0       # output
+
+# -----
+# 
+# To calculate a ^ b
+# 
+# Use binary exponentiation
+#     Uses experiment_mult_nonuniform for square multiply
+#     And makes "function calls" for double add

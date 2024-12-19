@@ -1,0 +1,3 @@
+[submodule "libdpf"]
+	path = libdpf
+	url = https://github.com/DigitalLibertiesLab/libdpf.git

@@ -1,0 +1,4 @@
+loop:inc cur loop
+cur cur (-1)
+.inc:-1
+.cur:-100  # negative of number of iterations

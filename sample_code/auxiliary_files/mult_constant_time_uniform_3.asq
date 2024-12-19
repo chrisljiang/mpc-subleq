@@ -1,0 +1,155 @@
+# o = 0
+o o
+
+# C = a
+Z Z
+C C
+a Z
+Z C
+
+# A = 0
+A A
+
+########################################
+##### if a == 0, B = 0 else B = -b #####
+########################################
+
+# B = 0
+B B
+
+# if a >= 0, check if a <= 0
+T T
+a T L0
+
+# padding instructions for security
+Z Z
+Z Z L1
+
+# if a <= 0, a == 0
+L0:Z Z
+T Z L3
+
+# B = -b
+L1:b B
+
+# padding instructions for security
+L2:Z Z L4
+L3:Z Z L2
+
+########################################
+
+# if i0 < 0, end
+L4:Z Z
+T T
+i0 Z
+Z T
+L T L7
+
+# A += A
+Z Z
+A Z
+Z A
+
+# if arr[i0] <= C, jump
+Z Z
+T T
+i0:arr_31 Z
+Z T
+C T L5
+
+# padding instructions for security
+Z Z
+S Z
+LL:inc Z LL
+Z Z L6
+
+# A += b
+L5:B A
+
+# i1 = i0
+Z Z
+i1 i1
+i0 Z
+Z i1
+
+# C -= arr[i1]
+i1:0 C
+
+# --i0 and loop
+L6:dec i0
+Z Z L4
+
+# end
+L7:Z Z
+A Z
+Z o
+Z Z arr_m1:-1
+
+. arr_0:1
+. arr_1:2
+. arr_2:4
+. arr_3:8
+. arr_4:16
+. arr_5:32
+. arr_6:64
+. arr_7:128
+. arr_8:256
+. arr_9:512
+. arr_10:1024
+. arr_11:2048
+. arr_12:4096
+. arr_13:8192
+. arr_14:16384
+. arr_15:32768
+. arr_16:65536
+. arr_17:131072
+. arr_18:262144
+. arr_19:524288
+. arr_20:1048576
+. arr_21:2097152
+. arr_22:4194304
+. arr_23:8388608
+. arr_24:16777216
+. arr_25:33554432
+. arr_26:67108864
+. arr_27:134217728
+. arr_28:268435456
+. arr_29:536870912
+. arr_30:1073741824
+. arr_31:2147483648
+
+. L:arr_m1  # &arr[-1] (if i - L <= 0 then exit)
+. S:2       # iterations for tight loop for padding no-op
+. C:0       # counter for a
+. B:0       # -b
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. a:0       # input
+. b:0       # input
+. o:0       # output
+
+# -----
+# 
+# To calculate a * b
+# 
+# arr = {1, 2, 4, 8, ...}
+# i = 63
+# C = a
+# A = 0
+# while (i >= 0)
+# {
+#     A += A
+#     if (arr[i] <= C)
+#     {
+#         A += b
+#         C -= arr[i]
+#     }
+#     else
+#     {
+#         // no-op (same number of instructions as previous section)
+#     }
+#     i -= 1
+# }

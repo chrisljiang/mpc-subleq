@@ -1,0 +1,114 @@
+##### calculate 1 << n
+
+# o = 0
+o o
+
+# A = 1
+A A
+inc A
+
+# C = n
+Z Z
+C C
+n Z
+Z C
+
+# if C <= 0, end
+L0:Z Z
+T T
+C Z
+Z T L1
+
+# A += A
+Z Z
+A Z
+Z A
+
+# --C and loop
+dec C L0 L0
+
+# B = -(1 << n)
+L1:B B
+A B
+
+##### calculate i / (1 << n)
+
+# C = i
+Z Z
+C C
+i Z
+Z C
+
+# D = d
+B D
+
+# A = 0
+A A
+
+# E = -1
+E E
+dec E
+
+# C -= D
+L2:D C
+
+# if C <= 0, end
+Z Z
+T T
+C Z
+Z T
+inc T L4
+
+# A -= E
+E A
+
+# D += D
+Z Z
+D Z
+Z D
+
+# if D <= C, jump
+Z Z
+T T
+D Z
+Z T
+C T L3
+
+# E = -1
+E E
+dec E
+
+# D = d and loop
+D D
+B D L2 L2
+
+# E += E and loop
+L3:Z Z
+E Z
+Z E L2 L2
+
+# end
+L4:Z Z
+A Z
+Z o (-1) (-1)
+
+. E:0       # counter of multiples of d
+. D:0       # value of multiples of d
+. C:0       # counter
+. B:0       # -(1 << n)
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. i:0       # input
+. n:0       # shift amount
+. o:0       # output
+
+-----
+
+To calculate i >> n
+
+Run i / (1 << n)
+    See experiment_shift_left_uniform_3 for i << n
+    See experiment_div_uniform_3 for a / b

@@ -1,0 +1,67 @@
+# o = 0
+o o
+
+# A = i
+Z Z
+A A
+i Z
+Z A
+
+# B = n+1
+Z Z
+B B
+n Z
+Z B
+inc B
+
+# pre-clear Z
+Z Z
+
+# if --C <= 0, end
+L0:dec C L3
+
+# if --B <= 0, jump
+dec B L2
+
+# A += A and loop
+A Z
+L1:Z A
+Z Z L0
+
+# no-ops and loop
+L2:Z Z L1
+
+# end
+L3:Z Z
+A Z
+Z o
+Z Z (-1)
+
+. C:33      # max shift + 1
+. B:0       # counter
+. A:0       # accumulator
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. i:0       # input
+. n:0       # shift amount
+. o:0       # output
+
+# -----
+# 
+# To calculate i << n
+# 
+# A = i
+# B = n + 1
+# C = 32 + 1  // max shift + 1
+# while (--C > 0)
+# {
+#     if (--B > 0)
+#     {
+#         A += A
+#     }
+#     else
+#     {
+#         // no ops for padding
+#     }
+# }

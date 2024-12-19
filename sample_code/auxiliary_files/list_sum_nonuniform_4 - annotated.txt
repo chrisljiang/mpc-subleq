@@ -1,0 +1,14 @@
+34 4 1 0
+28 28 1 1 - zero accumulator
+29 29 2 2 - zero output
+28 30 3 3 - "add" list0
+28 31 4 4 - "add" list1
+28 32 5 5 - "add" list2
+28 33 6 6 - "add" list3
+29 28 -1 -1 - set output (correct sign)
+0 - accumulator (28)
+0 - output (29)
+7 - list0 (30)
+8 - list1 (31)
+9 - list2 (32)
+10 - list3 (33)

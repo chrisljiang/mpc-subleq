@@ -1,0 +1,54 @@
+# o = 0
+o o
+
+# A = i
+Z Z
+A A
+i Z
+Z A
+
+# B = n
+Z Z
+B B
+n Z
+Z B
+
+# if B <= 0, end
+L0:Z Z
+T T
+B Z
+Z T L1
+
+# A += A
+Z Z
+A Z
+Z A
+
+# --B and loop
+dec B L0 L0
+
+# end
+L1:Z Z
+A Z
+Z o (-1) (-1)
+
+. B:0       # counter
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. i:0       # input
+. n:0       # shift amount
+. o:0       # output
+
+# -----
+# 
+# To calculate i << n
+# 
+# A = i
+# B = n
+# while (B > 0)
+# {
+#     A += A
+#     B -= 1
+# }

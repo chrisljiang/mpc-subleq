@@ -1,0 +1,157 @@
+# o = 0
+o o
+
+# A = 0
+A A
+
+# check if i == 0
+# if i+1 > 0 && i <= 0 then i == 0
+
+Z Z
+i Z  # <= Z = -i
+inc Z pad
+dec Z zero_loop
+B B force
+
+pad:dec Z
+
+# B = i
+B B
+force:Z B
+
+# D -= n (D = max shift + 1 to start)
+n D
+
+# pre-clear Z
+Z Z
+
+# if --C <= 0, end
+L0:dec C L3
+
+# if --D <= 0, jump
+dec D L2
+
+# A += A
+Z Z
+A Z
+Z A
+
+# if arr[idx0] <= B
+Z Z
+T T
+idx0:arr_31 Z
+Z T
+Z Z
+B T L1
+
+# padding instructions for security
+S0 Z LL0
+
+# ++A
+L1:inc A
+
+# B -= arr[idx1]
+idx1 idx1
+idx0 Z
+Z idx1
+idx1:0 B
+Z Z loop
+
+# padding instructions for security
+L2:S1 Z
+LL0:inc Z LL0
+
+# --idx0 and loop
+loop:dec idx0
+Z Z L0
+
+# padding instructions for security
+zero_loop:Z Z
+S2 Z
+LL1:inc Z LL1
+
+# end
+L3:Z Z
+A Z
+Z o
+Z Z (-1)
+
+. arr_0:1
+. arr_1:2
+. arr_2:4
+. arr_3:8
+. arr_4:16
+. arr_5:32
+. arr_6:64
+. arr_7:128
+. arr_8:256
+. arr_9:512
+. arr_10:1024
+. arr_11:2048
+. arr_12:4096
+. arr_13:8192
+. arr_14:16384
+. arr_15:32768
+. arr_16:65536
+. arr_17:131072
+. arr_18:262144
+. arr_19:524288
+. arr_20:1048576
+. arr_21:2097152
+. arr_22:4194304
+. arr_23:8388608
+. arr_24:16777216
+. arr_25:33554432
+. arr_26:67108864
+. arr_27:134217728
+. arr_28:268435456
+. arr_29:536870912
+. arr_30:1073741824
+. arr_31:2147483648
+
+. S0:4      # iterations for tight loop for padding no-op
+. S1:13     # iterations for tight loop for padding no-op
+. S2:1      # iterations for tight loop for padding no-op
+. D:33      # counter for n
+. C:33      # max shift + 1
+. B:0       # counter for i
+. A:0       # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. i:0       # input
+. n:0       # shift amount
+. o:0       # output
+
+# -----
+# 
+# To calculate i >> n
+# 
+# arr = {1, 2, 4, 8, ...}
+# idx = 31
+# A = 0
+# B = i
+# C = 32 + 1  // max shift + 1
+# D = 32 - n + 1
+# while (--C > 0)
+# {
+#     if (--D > 0)
+#     {
+#         A += A
+#         if (arr[idx] <= B)
+#         {
+#             A += 1
+#             B -= arr[idx]
+#         }
+#         else
+#         {
+#             // no-ops for padding
+#         }
+#     }
+#     else
+#     {
+#         // no-ops for padding
+#     }
+#     idx -= 1
+# }

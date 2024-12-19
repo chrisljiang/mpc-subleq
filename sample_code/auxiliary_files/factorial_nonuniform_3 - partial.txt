@@ -1,0 +1,33 @@
+.factorial_arg_n:0
+
+### factorial:
+    r                       r                       1
+    a                       a                       2
+    Z                       factorial_arg_n         3
+    a                       Z                       4
+    Z                       Z                       5
+    ## dec factorial_arg_n                          6
+
+### factorial_loop:
+    b                       b                       7
+    Z                       factorial_arg_n         8
+    b                       Z                       9
+
+### factorial_multiply:
+    r                       a                       10
+    ## dec b                                        b_leq_0
+    Z                       Z                       factorial_multiply
+
+### b_leq_0:
+    ## dec factorial_arg_n                          factorial_return
+    a                       a                       14
+    a                       r                       15
+    r                       r                       16
+    Z                       Z                       factorial_loop
+
+### factorial_return:
+    factorial_return_value  factorial_return_value  18
+    factorial_return_value  r                       19
+    Z                       Z                       factorial_return_address:-1
+
+.factorial_return_value:0

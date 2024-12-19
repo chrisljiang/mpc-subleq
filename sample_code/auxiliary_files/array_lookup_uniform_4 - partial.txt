@@ -1,0 +1,23 @@
+clear variables:
+    out out next next;
+    zero zero next next;
+
+load pointer:
+    zero idx next next;
+    i zero next next;
+    zero zero next next;
+
+get data:
+    zero i:0 next next; # note that i should be initialized to start of arr
+    out zero end end;
+
+data:
+    idx # zero indexed lookup into arr
+    out
+    zero
+
+    arr0
+    arr1
+    arr2
+    arr3
+    ...

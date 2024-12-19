@@ -1,0 +1,36 @@
+80 4 1 0
+60 60 1 1 # clear acc
+61 61 2 2 # clear out
+62 62 3 3 # clear zero
+63 63 4 4 # clear done
+62 65 5 5 # zero = -start
+49 62 6 6 # i = start
+62 62 7 7 # clear zero
+63 63 8 8 # clear done
+62 66 9 9 # zero = -end
+63 62 10 10 # done = end
+62 62 11 11 # clear zero
+63 49 14 12 # if done - i <= 0 then goto "finish" else goto next
+60 49:0 13 13 # acc -= *i (where i is a pointer at data index 49)
+49 64 7 7 # ++i
+61 60 -1 -1 # out = -acc
+60:0 - acc
+61:0 - out
+62:0 - zero
+63:0 - done
+64:-1 - inc
+65:67 - start of list index
+66:80 - end of list index (one past end of list)
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22

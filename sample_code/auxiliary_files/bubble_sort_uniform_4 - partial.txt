@@ -1,0 +1,55 @@
+.bubblesort_swapped:0
+.bubblesort_arg_p:0
+
+### bubblesort:
+    bubblesort_swapped  bubblesort_swapped  1 1
+
+    bubblesort_i        bubblesort_i        2 2
+    bubblesort_i_       bubblesort_i_       3 3
+    Z                   bubblesort_arg_p    4 4
+    bubblesort_i        Z                   5 5
+    bubblesort_i_       Z                   6 6
+    Z                   Z                   7 7
+
+    bubblesort_j        bubblesort_j        8 8
+    bubblesort_j_       bubblesort_j_       9 9
+    bubblesort_j__      bubblesort_j__      10 10
+    Z                   bubblesort_arg_p    11 11
+    ## dec Z                                12 12
+    bubblesort_j        Z                   13 13
+    bubblesort_j_       Z                   14 14
+    bubblesort_j__      Z                   15 15
+    Z                   Z                   16 16
+
+### bubblesort_forloop:
+    a                   a                   17 17
+    Z                   bubblesort_i:0      18 18
+    a                   Z                   19 19
+    Z                   Z                   20 20
+    b                   b                   21 21
+    Z                   bubblesort_j:0      22 22
+    b                   Z                   23 23
+    Z                   Z                   24 24
+
+    a                   b                   30 25
+    bubblesort_i_:0     a                   26 26
+    Z                   a                   27 27
+    bubblesort_j_:0     Z                   28 28
+    Z                   Z                   29 29
+    ## inc bubblesort_swapped               30 30
+
+### bubblesort_next:
+    ## inc bubblesort_i                     31 31
+    ## inc bubblesort_i_                    32 32
+    ## inc bubblesort_j                     33 33
+    ## inc bubblesort_j_                    34 34
+    ## inc bubblesort_j__                   35 35
+    bubblesort_j__:0    Z                   37 36
+    Z                   Z                   16 37
+
+### bubblesort_endfor:
+    bubblesort_swapped  Z                   39 38
+    Z                   Z                   0 39
+
+### bubblesort_return:
+    Z                   Z                   -1 -1

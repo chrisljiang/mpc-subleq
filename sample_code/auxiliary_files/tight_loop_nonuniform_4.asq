@@ -1,0 +1,3 @@
+loop:dec cur (-1) loop
+.dec:1
+.cur:100

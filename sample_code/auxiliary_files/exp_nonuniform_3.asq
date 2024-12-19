@@ -1,0 +1,227 @@
+# oe = 0
+oe oe
+
+# Ce = be-1
+Z Z
+Ce Ce
+be Z
+Z Ce
+dec Ce
+
+# Be = -ae
+Be Be
+ae Be
+
+# Ae = ae, De = ae
+Ae Ae
+De De
+Be Ae
+Be De
+
+# Ee = 1
+Ee Ee
+inc Ee
+
+# if Ce <= 0, end
+Le0:Z Z
+T T
+Ce Z
+Z T Le2
+
+# if Ee <= Ce, jump to Le1
+Z Z
+T T
+Ee Z
+Z T
+Ce T Le1
+
+# De = ae, Ee = 1
+De De
+Be De
+Ee Ee
+inc Ee
+
+# Ce -= Ee
+Le1:Ee Ce
+
+# "function call" to multiplication and square
+# load Ae into am
+# load De into bm
+# om = Ae * De
+# os = De * De
+# Ae *= De, De *= De
+Z Z
+am am
+Ae Z
+Z am
+Z Z
+bm bm
+De Z
+Z bm
+Z Z mult
+
+# store return value of "function calls"
+ret:Ae Ae
+om Ae
+De De
+os De
+
+# Ee += Ee and loop
+Z Z
+Ee Z
+Z Ee
+Z Z Le0
+
+# end
+Le2:Z Z
+Ae Z
+Z oe
+Z Z (-1)
+
+##### multiplication function
+
+# om = 0
+mult:om om
+
+# Cm = am-1
+Z Z
+Cm Cm
+am Z
+Z Cm
+dec Cm
+
+# Bm = -bm
+Bm Bm
+bm Bm
+
+# Am = bm, Dm = bm
+Am Am
+Dm Dm
+Bm Am
+Bm Dm
+
+# Em = 1
+Em Em
+inc Em
+
+# if Cm <= 0, end
+Lm0:Z Z
+T T
+Cm Z
+Z T Lm2
+
+# if Em <= Cm, jump to Lm1
+Z Z
+T T
+Em Z
+Z T
+Cm T Lm1
+
+# Dm = bm, Em = 1
+Dm Dm
+Bm Dm
+Em Em
+inc Em
+
+# Cm -= Em, Am += Dm, Dm += Dm, Em += Em, and loop
+Lm1:Em Cm
+Z Z
+Dm Z
+Z Am
+Z Dm
+Z Z
+Em Z
+Z Em
+Z Z Lm0
+
+# end
+Lm2:Am om
+
+##### square function
+
+# os = 0
+os os
+
+# Bm = -bm
+Bm Bm
+bm Bm
+
+# Cm = bm-1
+Cm Cm
+Bm Cm
+dec Cm
+
+# Am = bm, Dm = bm
+Am Am
+Dm Dm
+Bm Am
+Bm Dm
+
+# Em = 1
+Em Em
+inc Em
+
+# if Cm <= 0, end
+Ls0:Z Z
+T T
+Cm Z
+Z T Ls2
+
+# if Em <= Cm, jump to Ls1
+Z Z
+T T
+Em Z
+Z T
+Cm T Ls1
+
+# Dm = bm, Em = 1
+Dm Dm
+Bm Dm
+Em Em
+inc Em
+
+# Cm -= Em, Am += Dm, Dm += Dm, Em += Em, and loop
+Ls1:Em Cm
+Z Z
+Dm Z
+Z Am
+Z Dm
+Z Z
+Em Z
+Z Em
+Z Z Ls0
+
+# end
+Ls2:Am os
+Z Z ret
+
+#####
+
+. Em:0      # counter of multiples of bm
+. Dm:0      # value of multiples of bm
+. Cm:0      # counter for am (or bm when squaring)
+. Bm:0      # -bm
+. Am:0      # accumulator
+. am:0      # input
+. bm:0      # input
+. om:0      # -output
+. os:0      # -output
+. Ee:0      # counter of powers of ae
+. De:0      # value of powers of ae
+. Ce:0      # counter for be
+. Be:0      # -ae
+. Ae:0      # accumulator
+. T:0       # test
+. Z:0       # zero
+. dec:1     # decrement
+. inc:-1    # increment
+. ae:0      # input
+. be:0      # input
+. oe:0      # output
+
+# -----
+# 
+# To calculate ae ^ be
+# 
+# Use experiment_mult_uniform_3
+#     Nested as "function calls"
